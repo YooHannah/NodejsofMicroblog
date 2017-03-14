@@ -9,6 +9,7 @@ var session    = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 var settings = require('./settings');
 var router = require('./routes/index');//首页
+var flash = require('connect-flash');
 
 
 var app = express();
@@ -28,19 +29,27 @@ app.use(partials());
 app.use(session({
   secret: settings.cookieSecret,
   store: new MongoStore({
-    url: 'mongodb://localhost/db'//链接数据库地址  
+    url: 'mongodb://localhost/db'//链接数据库地址
   }),
 
   resave: false,
   saveUninitialized:true
 }));
+app.use(flash());
+
+app.use(function(req,res,next){
+  res.locals.user=req.session.user;
+
+  var err = req.flash('error');
+  var success = req.flash('success');
+
+  res.locals.error = err.length ? err : null;
+  res.locals.success = success.length ? success : null;
+
+  next();
+});
 
 app.use('/', router);
-// app.use('/users', users);
-// app.use('/post', post);
-app.use('/reg',router );
-// app.use('/login',login );
-// app.use('/logout',logout );
 
 
 // catch 404 and forward to error handler
@@ -60,5 +69,7 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+
 
 module.exports = app;
