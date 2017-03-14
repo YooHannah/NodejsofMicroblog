@@ -10,9 +10,9 @@ var MongoStore = require('connect-mongo')(session);
 var settings = require('./settings');
 var router = require('./routes/index');//首页
 var flash = require('connect-flash');
-var fs = require('fs');
-var accessLogfile = fs.createWriteStream('access.log', {flags: 'a'});
-var errorLogfile = fs.createWriteStream('error.log', {flags: 'a'})
+// var fs = require('fs');
+// var accessLogfile = fs.createWriteStream('access.log', {flags: 'a'});
+// var errorLogfile = fs.createWriteStream('error.log', {flags: 'a'})
 
 var app = express();
 
@@ -22,7 +22,7 @@ app.set('view engine', 'ejs');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(express.logger({stream: accessLogfile}));
+// app.use(express.logger({stream: accessLogfile}));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
