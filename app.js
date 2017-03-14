@@ -10,7 +10,9 @@ var MongoStore = require('connect-mongo')(session);
 var settings = require('./settings');
 var router = require('./routes/index');//首页
 var flash = require('connect-flash');
-
+var fs = require('fs');
+var accessLogfile = fs.createWriteStream('access.log', {flags: 'a'});
+var errorLogfile = fs.createWriteStream('error.log', {flags: 'a'})
 
 var app = express();
 
@@ -20,6 +22,7 @@ app.set('view engine', 'ejs');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(express.logger({stream: accessLogfile}));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -37,6 +40,7 @@ app.use(session({
 }));
 app.use(flash());
 
+//视图交互
 app.use(function(req,res,next){
   res.locals.user=req.session.user;
 
@@ -49,6 +53,7 @@ app.use(function(req,res,next){
   next();
 });
 
+//路由引入
 app.use('/', router);
 
 
@@ -70,6 +75,13 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+// app.configure('production', function(){
+// app.error(function (err, req, res, next) {
+// var meta = '[' + new Date() + '] ' + req.url + '\n';
+// errorLogfile.write(meta + err.stack + '\n');
+// next();
+// });
+// });
 
 
 module.exports = app;
