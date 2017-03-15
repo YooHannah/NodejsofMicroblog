@@ -1,28 +1,27 @@
 #!/usr/bin/env node
-
+//该node脚本用于分离配置和启动程序
 /**
- * Module dependencies.
+ * Module dependencies.依赖加载
  */
-
 var app = require('../app');
 var debug = require('debug')('microblog:server');
 var http = require('http');
 
 /**
- * Get port from environment and store in Express.
+ * Get port from environment and store in Express.定义启动端口
  */
 
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
 /**
- * Create HTTP server.
+ * Create HTTP server.创建HTTP服务器实例
  */
 
 var server = http.createServer(app);
 
 /**
- * Listen on provided port, on all network interfaces.
+ * Listen on provided port, on all network interfaces.启动网络服务监听端口
  */
 
 server.listen(port);
@@ -30,7 +29,7 @@ server.on('error', onError);
 server.on('listening', onListening);
 
 /**
- * Normalize a port into a number, string, or false.
+ * Normalize a port into a number, string, or false.端口标准化函数
  */
 
 function normalizePort(val) {
@@ -50,7 +49,7 @@ function normalizePort(val) {
 }
 
 /**
- * Event listener for HTTP server "error" event.
+ * Event listener for HTTP server "error" event.HTTP异常事件处理函数
  */
 
 function onError(error) {
@@ -78,7 +77,7 @@ function onError(error) {
 }
 
 /**
- * Event listener for HTTP server "listening" event.
+ * Event listener for HTTP server "listening" event. 事件绑定函数
  */
 
 function onListening() {

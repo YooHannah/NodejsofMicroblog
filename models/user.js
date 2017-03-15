@@ -1,9 +1,11 @@
+// 用户模型
 var mongodb = require('./db');
 function User(user) {
 	this.name = user.name;
 	this.password = user.password;
 };
 module.exports = User;
+// 对象实例的方法，用于将用户对象的数据保存到数据库中
 User.prototype.save = function save(callback) {
 // 存入 Mongodb 的文档
 	var user = {
@@ -30,6 +32,8 @@ User.prototype.save = function save(callback) {
 		});
 	});
 };
+
+// 对象构造函数的方法，用于从数据库中查找指定的用户。
 User.get = function get(username, callback) {
 	mongodb.open(function(err, db) {
 		if (err) {

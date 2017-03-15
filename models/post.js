@@ -9,6 +9,7 @@ function Post(username, post, time) {
 	}
 };
 module.exports = Post;
+// Post 对象实例的方法，用于将对象的变动保存到数据库
 Post.prototype.save = function save(callback) {
 	// 存入 Mongodb 的文档
 	var post = {
@@ -36,6 +37,7 @@ Post.prototype.save = function save(callback) {
 		});
 	});
 };
+// 从数据库中获取微博，可以按指定用户获取，也可以获取全部的内容
 Post.get = function get(username, callback) {
 	mongodb.open(function(err, db) {
 		if (err) {

@@ -4,8 +4,6 @@ var crypto = require('crypto');
 var User = require('../models/user.js');
 var Post = require('../models/post.js');
 
-
-
 /* GET home page. */
 //首页页面路由
 router.get('/', function(req, res, next) {
